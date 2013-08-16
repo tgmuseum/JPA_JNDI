@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context>
+    <Resource name="jdbc/oracle" auth="Container" type="javax.sql.DataSource"
+              maxActive="100" maxIdel="30" maxWait="1000"
+              username="test" password="1234" driverClassName="oracle.jdbc.driver.OracleDriver"
+              url="jdbc:oracle:thin:@192.168.44.128:1521:XE"/>
+
+    <Resource name="jdbc/mysql" auth="Container" type="javax.sql.DataSource"
+              maxActive="100" maxIdel="30" maxWait="1000"
+              username="root" password="test" driverClassName="com.mysql.jdbc.Driver"
+              url="jdbc:mysql://localhost/test"/>
+
+</Context>

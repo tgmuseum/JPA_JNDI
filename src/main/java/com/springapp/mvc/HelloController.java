@@ -16,6 +16,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+/**
+ * The type Hello controller.
+ */
 @Controller
 @RequestMapping("/")
 public class HelloController {
@@ -27,7 +30,15 @@ public class HelloController {
     @PersistenceContext (unitName = "mysqlUnit")
     private EntityManager mysqlEntityManager;
 
-	@RequestMapping(method = RequestMethod.GET)
+
+    /**
+     * Print welcome.
+     * JNDI lookup해서 DB호출
+     *
+     * @param model the model
+     * @return the string
+     */
+    @RequestMapping(method = RequestMethod.GET)
 	public String printWelcome(ModelMap model) {
 
         Connection conn = null;
@@ -61,6 +72,12 @@ public class HelloController {
 		return "hello";
 	}
 
+    /**
+     * Test oracle.
+     *
+     * @param model the model
+     * @return the string
+     */
     @RequestMapping("oracle")
     @Transactional
     public String testOracle(ModelMap model) {
@@ -80,6 +97,12 @@ public class HelloController {
         return "hello";
     }
 
+    /**
+     * Test mysql.
+     *
+     * @param model the model
+     * @return the string
+     */
     @RequestMapping("mysql")
     @Transactional(value = "transactionManager2")
     public String testMysql(ModelMap model) {

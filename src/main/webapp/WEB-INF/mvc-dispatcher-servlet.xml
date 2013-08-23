@@ -1,19 +1,10 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:p="http://www.springframework.org/schema/p"
-       xmlns:jpa="http://www.springframework.org/schema/data/jpa"
-       xmlns:jee="http://www.springframework.org/schema/jee"
-       xmlns:tx="http://www.springframework.org/schema/tx"
        xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="
-        http://www.springframework.org/schema/jee
-        http://www.springframework.org/schema/jee/spring-jee-3.2.xsd
         http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd
-        http://www.springframework.org/schema/tx
-        http://www.springframework.org/schema/tx/spring-tx-3.2.xsd
-        http://www.springframework.org/schema/data/jpa
-        http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context.xsd">
 
@@ -71,38 +62,10 @@
         <property name="templateEngine" ref="templateEngine" />
         <property name="characterEncoding" value="UTF-8" />
     </bean>
-<!--
-    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+
+    <bean id="jspViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver" >
         <property name="prefix" value="/WEB-INF/pages/"/>
         <property name="suffix" value=".jsp"/>
     </bean>
--->
 
-<!--
-    <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
-        <property name="jndiName" value="java:/comp/env/jdbc/web" />
-    </bean>
--->
-    <jee:jndi-lookup id="dataSourceOracle" jndi-name="jdbc/oracle"/>
-    <jee:jndi-lookup id="dataSourceMysql" jndi-name="jdbc/mysql"/>
-
-    <jpa:repositories base-package="com.springapp.mvc" entity-manager-factory-ref="entityManagerFactory2"/>
-
-    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-        <property name="persistenceUnitName" value="oracleUnit"/>
-        <property name="dataSource" ref="dataSourceOracle"/>
-    </bean>
-    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
-        <property name="entityManagerFactory" ref="entityManagerFactory" />
-    </bean>
-    <tx:annotation-driven transaction-manager="transactionManager"/>
-
-    <bean id="entityManagerFactory2" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-        <property name="persistenceUnitName" value="mysqlUnit"/>
-        <property name="dataSource" ref="dataSourceMysql"/>
-    </bean>
-    <bean id="transactionManager2" class="org.springframework.orm.jpa.JpaTransactionManager">
-        <property name="entityManagerFactory" ref="entityManagerFactory2" />
-    </bean>
-    <tx:annotation-driven transaction-manager="transactionManager2"/>
 </beans>

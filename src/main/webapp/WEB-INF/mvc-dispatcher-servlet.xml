@@ -1,6 +1,7 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:jpa="http://www.springframework.org/schema/data/jpa"
        xmlns:jee="http://www.springframework.org/schema/jee"
        xmlns:tx="http://www.springframework.org/schema/tx"
        xmlns:context="http://www.springframework.org/schema/context"
@@ -11,15 +12,71 @@
         http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/tx
         http://www.springframework.org/schema/tx/spring-tx-3.2.xsd
+        http://www.springframework.org/schema/data/jpa
+        http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context.xsd">
 
     <context:component-scan base-package="com.springapp.mvc"/>
 
+    <!-- PagesDialect configuration -->
+    <bean id="pagesDialect" class="net.sourceforge.pagesdialect.PagesDialect">
+        <!--
+        <property name="properties">
+            <map>
+                <entry key="pageParameter" value="page" />
+                <entry key="sortParameter" value="sort" />
+                <entry key="sortTypeParameter" value="sortType" />
+                <entry key="exportDivId" value="exportlinkcontainer" />
+                <entry key="pagesdialect.oneResult" value="search.listOne" />
+                <entry key="pagesdialect.results" value="search.list" />
+                <entry key="pagesdialect.first" value="first" />
+                <entry key="pagesdialect.previous" value="previous" />
+                <entry key="pagesdialect.page" value="page" />
+                <entry key="pagesdialect.next" value="next" />
+                <entry key="pagesdialect.last" value="last" />
+                <entry key="pagesdialect.none" value="search.none" />
+                <entry key="pagesdialect.exportPdf" value="pdf" />
+                <entry key="pagesdialect.exportExcel" value="excel" />
+            </map>
+        </property>
+        -->
+        <!--
+        <property name="typeFormatters">
+            <set>
+                <bean class="net.sourceforge.pagesdialect.examples.DateFormatter" />
+            </set>
+        </property>
+        -->
+    </bean>
+    <!-- Thymeleaf configuration -->
+    <bean id="templateResolver" class="org.thymeleaf.templateresolver.ServletContextTemplateResolver">
+        <property name="cacheable" value="false" />
+        <property name="prefix" value="/WEB-INF/pages/" />
+        <property name="templateMode" value="HTML5" />
+        <property name="characterEncoding" value="UTF-8" />
+    </bean>
+    <!-- Template engine -->
+    <bean id="templateEngine" class="org.thymeleaf.spring3.SpringTemplateEngine">
+        <property name="templateResolver" ref="templateResolver" />
+        <property name="dialects">
+            <set>
+                <bean class="org.thymeleaf.spring3.dialect.SpringStandardDialect" />
+                <ref bean="pagesDialect" />
+            </set>
+        </property>
+    </bean>
+    <!-- View resolver -->
+    <bean id="viewResolver" class="org.thymeleaf.spring3.view.ThymeleafViewResolver">
+        <property name="templateEngine" ref="templateEngine" />
+        <property name="characterEncoding" value="UTF-8" />
+    </bean>
+<!--
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/pages/"/>
         <property name="suffix" value=".jsp"/>
     </bean>
+-->
 
 <!--
     <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
@@ -28,6 +85,8 @@
 -->
     <jee:jndi-lookup id="dataSourceOracle" jndi-name="jdbc/oracle"/>
     <jee:jndi-lookup id="dataSourceMysql" jndi-name="jdbc/mysql"/>
+
+    <jpa:repositories base-package="com.springapp.mvc" entity-manager-factory-ref="entityManagerFactory2"/>
 
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
         <property name="persistenceUnitName" value="oracleUnit"/>

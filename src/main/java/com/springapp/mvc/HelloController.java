@@ -1,10 +1,12 @@
 package com.springapp.mvc;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.xml.sax.AttributeList;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -15,6 +17,7 @@ import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.List;
 
 /**
  * The type Hello controller.
@@ -23,13 +26,28 @@ import java.sql.ResultSet;
 @RequestMapping("/")
 public class HelloController {
 
+    @Autowired
+    private ComnRepository comnRepository;
+
     @PersistenceContext (unitName = "oracleUnit")
     private EntityManager oracleEntityManager;
-
 
     @PersistenceContext (unitName = "mysqlUnit")
     private EntityManager mysqlEntityManager;
 
+    @RequestMapping("thymeleaf")
+    public String thymeleafTest(ModelMap model){
+
+        model.addAttribute("products", comnRepository.findAll());
+        /*
+        List<AccountEntity> list = comnRepository.findAll();
+        for (int i = 0; i < list.size(); i++) {
+            System.out.println(list.get(i).getId());
+        }
+        */
+        //return "thymeleaf.html";
+        return "thymeleaf.html";
+    }
 
     /**
      * Print welcome.
@@ -47,7 +65,7 @@ public class HelloController {
 
         try{
             Context ctx = new InitialContext();
-            DataSource ds = (DataSource)ctx.lookup("java:comp/env/jdbc/web");
+            DataSource ds = (DataSource)ctx.lookup("java:comp/env/jdbc/oracle");
             conn = ds.getConnection();
 
             pstmt = conn.prepareStatement("select sysdate from dual");

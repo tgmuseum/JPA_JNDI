@@ -8,6 +8,6 @@
     <Resource name="jdbc/mysql" auth="Container" type="javax.sql.DataSource"
               maxActive="100" maxIdel="30" maxWait="1000"
               username="root" password="test" driverClassName="com.mysql.jdbc.Driver"
-              url="jdbc:mysql://localhost/test"/>
+              url="jdbc:mysql://localhost/test?useUnicode=true&amp;characterEncoding=utf-8"/>
 
 </Context>

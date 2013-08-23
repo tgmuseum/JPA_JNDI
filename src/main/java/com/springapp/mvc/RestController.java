@@ -30,8 +30,6 @@ public class RestController {
 
         ComnRes comnRes = new ComnRes();
 
-        //model.addAttribute("comnRes",comnRes);
-
         return comnRes;
     }
 }

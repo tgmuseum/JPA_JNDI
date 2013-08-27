@@ -13,6 +13,7 @@
         <mysql.version>5.1.6</mysql.version>
         <jersey.version>1.11</jersey.version>
         <thymeleaf.version>2.0.13</thymeleaf.version>
+        <atomikos.version>3.8.0</atomikos.version>
     </properties>
 
     <repositories>
@@ -25,6 +26,31 @@
     </repositories>
 
     <dependencies>
+        <dependency>
+            <groupId>com.atomikos</groupId>
+            <artifactId>transactions-jta</artifactId>
+            <version>${atomikos.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.atomikos</groupId>
+            <artifactId>transactions-jdbc</artifactId>
+            <version>${atomikos.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.atomikos</groupId>
+            <artifactId>transactions-hibernate3</artifactId>
+            <version>${atomikos.version}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>hibernate</artifactId>
+                    <groupId>org.hibernate</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <!-- thymeleaf paging-->
         <dependency>
             <groupId>net.sourceforge.pagesdialect</groupId>
             <artifactId>pagesdialect-core</artifactId>

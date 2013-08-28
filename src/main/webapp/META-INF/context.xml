@@ -1,13 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Context>
-    <Resource name="jdbc/oracle" auth="Container" type="javax.sql.DataSource"
-              maxActive="100" maxIdel="30" maxWait="1000"
-              username="test" password="1234" driverClassName="oracle.jdbc.driver.OracleDriver"
-              url="jdbc:oracle:thin:@192.168.44.128:1521:XE"/>
-
     <Resource name="jdbc/mysql" auth="Container" type="javax.sql.DataSource"
               maxActive="100" maxIdel="30" maxWait="1000"
               username="root" password="test" driverClassName="com.mysql.jdbc.Driver"
               url="jdbc:mysql://localhost/test?useUnicode=true&amp;characterEncoding=utf-8"/>
+
+    <Resource name="jdbc/oracle" auth="Container" type="javax.sql.DataSource"
+              maxActive="100" maxIdel="30" maxWait="1000"
+              username="test" password="1234" driverClassName="oracle.jdbc.driver.OracleDriver"
+              url="jdbc:oracle:thin:@192.168.44.128:1521:XE"/>
+<!--
+    <Resource name="jdbc/mysql" uniqueResourceName="jdbc/mysql"
+              auth="Container" type="com.atomikos.jdbc.AtomikosDataSourceBean"
+              factory="com.atomikos.tomcat.BeanFactory" maxPoolSize="100" minPoolSize="10"
+              xaDataSourceClassName="com.mysql.jdbc.jdbc2.optional.MysqlXADataSource"
+              xaProperties.user="root" xaProperties.password="test"
+              xaProperties.url="jdbc:mysql://localhost/test?useUnicode=true&amp;characterEncoding=UTF-8&amp;useFastDateParsing=false&amp;pinGlobalTxToPhysicalConnection=true" />
+
+    <Resource name="jdbc/oracle" uniqueResourceName="jdbc/oracle"
+              auth="Container" type="com.atomikos.jdbc.AtomikosDataSourceBean"
+              factory="com.atomikos.tomcat.BeanFactory" maxPoolSize="100" minPoolSize="10"
+              xaDataSourceClassName="oracle.jdbc.xa.client.OracleXADataSource"
+              xaProperties.user="root" xaProperties.password="test"
+              xaProperties.url="jdbc:oracle:thin:@192.168.44.128:1521:XE" />
+-->
 
 </Context>
